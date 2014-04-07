@@ -16,6 +16,11 @@ def index():
                 <p><a href="/parks/name/near">Query by Park Name & Coordinates</a></p>
             '''
 
+@app.route('/api')
+@app.route('/api/<name>')
+def api(name='Stranger'):
+    return 'Got API, %s?' % name
+
 @app.route('/hello')
 @app.route('/hello/<name>')
 def greet(name='Stranger'):
