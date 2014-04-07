@@ -32,7 +32,8 @@ def run_simple_httpd_server(app, ip, port=8080):
 if __name__ == '__main__':
    ip   = os.environ['OPENSHIFT_PYTHON_IP']
    port = 8080
-   zapp = imp.load_source('application', 'wsgi/application')
+   zapp = imp.load_source('application', 'application')
+   #zapp = imp.load_source('application', 'wsgi/application')
 
    print('Starting WSGIServer on %s:%d ... ' % (ip, port))
    run_simple_httpd_server(zapp.application, ip, port)
