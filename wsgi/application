@@ -27,13 +27,7 @@ def greet(name='Stranger'):
   return 'Hello %s, how are you?' % name
 
 @app.route('/api')
-@app.route('/api/<name>')
 def api(name='Stranger'):
   return 'hey'
-#print('Running api')
-#print('Result %s' % str(result))
-#result = { 'error': 'No data available for this request' }
-  #return json.dumps(result)
-#return json.dumps(str(result))
 
 
