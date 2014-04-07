@@ -27,7 +27,7 @@ def greet(name='Stranger'):
   return 'Hello %s, how are you?' % name
 
 @app.route('/api')
-def api(name='Stranger'):
+def runapi(name='Stranger'):
   return 'hey'
 
 
