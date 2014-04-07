@@ -29,8 +29,11 @@ def greet(name='Stranger'):
 @app.route('/api')
 @app.route('/api/<name>')
 def api(name='Stranger'):
-  result = { 'error': 'No data available for this request' }
+  return 'hey'
+#print('Running api')
+#print('Result %s' % str(result))
+#result = { 'error': 'No data available for this request' }
   #return json.dumps(result)
-  return json.dumps(str(result))
+#return json.dumps(str(result))
 
 
