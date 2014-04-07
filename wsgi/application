@@ -24,5 +24,5 @@ def api(name='Stranger'):
 @app.route('/hello')
 @app.route('/hello/<name>')
 def greet(name='Stranger'):
-    return 'Hello there %s, how are you?' % name
+    return 'Hello there Mr. %s, how are you?' % name
 
