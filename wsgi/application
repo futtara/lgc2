@@ -31,6 +31,6 @@ def greet(name='Stranger'):
 def api(name='Stranger'):
   result = { 'error': 'No data available for this request' }
   #return json.dumps(result)
-  return json.dumps(str(list(result)))
+  return json.dumps(str(result))
 
 
