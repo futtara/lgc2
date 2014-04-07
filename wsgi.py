@@ -220,7 +220,7 @@ pre {
 <body>
 <section class='container'>
           <hgroup>
-            <h1>Welcome to the Steve's Python application on OpenShift</h1>
+            <h1>Welcome to the real Steve's Python application on OpenShift</h1>
           </hgroup>
 
         <div class="row">
