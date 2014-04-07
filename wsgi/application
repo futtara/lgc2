@@ -8,6 +8,11 @@ try:
 except ImportError:
   pass
 
+myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
+myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
+myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
+mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
+
 application = Bottle()
 app = application
 
@@ -24,7 +29,12 @@ def index():
 @app.route('/api')
 @app.route('/api/<name>')
 def api(name='Stranger'):
-  return 'Got API, %s?' % name
+  conn = MySQLdb.connect(host=myhost, user=myuser, passwd=mypw, db="lgc", cursorclass=MySQLdb.cursors.DictCursor)
+  sql = 'SELECT count(*) FROM info'
+  cursor = conn.cursor()
+  cursor.execute(sql)
+  rows = cursor.fetchall()
+  return rows[0]
 
 @app.route('/hello')
 @app.route('/hello/<name>')
