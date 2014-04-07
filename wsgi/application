@@ -29,7 +29,7 @@ def index():
 @app.route('/api')
 @app.route('/api/<name>')
 def api(name='Stranger'):
-  conn = MySQLdb.connect(host=myhost, user=myuser, passwd=mypw, db="lgc", cursorclass=MySQLdb.cursors.DictCursor)
+  conn = pymysql.connect(host=myhost, user=myuser, passwd=mypw, db="lgc", cursorclass=pymysql.cursors.DictCursor)
   sql = 'SELECT count(*) FROM info'
   cursor = conn.cursor()
   cursor.execute(sql)
