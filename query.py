@@ -19,11 +19,6 @@ myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
 myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
 mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
 
-  sql = 'SELECT count(*) FROM info'
-  cursor = conn.cursor()
-  cursor.execute(sql)
-  rows = cursor.fetchall()
-
 def get_sql(type, name, year, fields):
 
     sql = "SELECT * FROM info WHERE "
