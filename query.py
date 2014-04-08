@@ -2,8 +2,9 @@
 #   lists and tuples become arrays, dictionaries become objects with key-value pairs
 
 import os, sys, json
-#import urllib
-import collections.OrderedDict
+import urllib
+#from ordereddict import OrderedDict
+from collections import OrderedDict
 from copy import deepcopy
 
 dodebug = 0
@@ -18,6 +19,7 @@ myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
 myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
 myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
 mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
+mydb = 'lgc'
 
 def get_sql(type, name, year, fields):
 
@@ -66,15 +68,15 @@ def niceFormat(entry):
         return entry
 
 def get_data(format, type, name, year, fields):
-    conn = pymysql.connect(host=myhost, user=myuser, passwd=mypw, db="lgc", cursorclass=pymysql.cursors.DictCursor)
+    conn = pymysql.connect(host=myhost, user=myuser, passwd=mypw, db=mydb, cursorclass=pymysql.cursors.DictCursor)
     cursor = conn.cursor()
      
     sql = get_sql(type, name, year, fields)
     cursor.execute(sql)
      
-    all_data = collections.OrderedDict()
-    data_row = collections.OrderedDict()
-    year_array = collections.OrderedDict()
+    all_data = OrderedDict()
+    data_row = OrderedDict()
+    year_array = OrderedDict()
 
     rows = cursor.fetchall()
 
@@ -156,7 +158,7 @@ def main():
     #all_data = get_data('json', 'county', 'all', '2010', 'General+Fund+Balance')
     #all_data = get_data('json', 'city', 'all', '2010', 'all')
     #all_data = get_data('json', 'city', 'BOZEMAN', '2010', 'all')
-    all_data = get_data('json', 'county', 'all', '2010', 'Income')
+    all_data = get_data('json', 'county', 'all', '2009', 'Income')
     print all_data
 
 if __name__ == '__main__':
