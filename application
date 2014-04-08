@@ -34,15 +34,15 @@ def greet(name='Stranger'):
 @route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
 @route('/data/<format>/<type>/<name>/fields/<fields>')
 def get_the_data(format='', type='', name='', year='', fields=''):
-    data = query_lgc.get_data(format, type, name, year, fields)
+    data = query.get_data(format, type, name, year, fields)
     return data
 
 #---------- Main method for local developement ----------
 
 def main():
-    #data = query_lgc.get_data('json', 'city', 'all', '2010', 'all')
-    #data = query_lgc.get_data('json', 'city', 'BOZEMAN', '2010', 'all')
-    data = query_lgc.get_data('json', 'county', 'all', '2009', 'Income')
+    #data = query.get_data('json', 'city', 'all', '2010', 'all')
+    #data = query.get_data('json', 'city', 'BOZEMAN', '2010', 'all')
+    data = query.get_data('json', 'county', 'all', '2009', 'Income')
     return data
 
 if __name__ == '__main__':
