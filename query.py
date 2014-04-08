@@ -3,8 +3,8 @@
 
 import os, sys, json
 import urllib
-#from ordereddict import OrderedDict
-from collections import OrderedDict
+from ordereddict import OrderedDict
+#from collections import OrderedDict
 from copy import deepcopy
 
 dodebug = 0
@@ -15,11 +15,16 @@ try:
 except ImportError:
     pass
 
-myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
-myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
-myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
-mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
-mydb = 'lgc'
+#myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
+#myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
+#myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
+#mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
+#mydb = 'lgc'
+
+myhost = 'localhost'
+myuser = 'steve'
+mypw = 'steve'
+mydb = 'lgc2'
 
 def get_sql(type, name, year, fields):
 
@@ -80,16 +85,17 @@ def get_data(format, type, name, year, fields):
 
     rows = cursor.fetchall()
 
-	# Prepare to read data, if available
+  # Prepare to read data, if available
     try:
         the_year = rows[0]['year']
         the_name = rows[0]['name']
     except IndexError:
-        # e = sys.exc_info()[0]
-        # print("Error: %s" % e)
-		conn.close()
-		result = { 'error': 'No data available for this request' }
-		return json.dumps(result)
+        e = sys.exc_info()[0]
+        print("Error: %s" % e)
+
+  	conn.close()
+  	result = { 'error': 'No data available for this request' }
+  	return json.dumps(result)
 
     last_row_name = 0
     last_row_year = 0
