@@ -3,8 +3,8 @@
 
 import os, sys, json
 import urllib
-from ordereddict import OrderedDict
-#from collections import OrderedDict
+#from ordereddict import OrderedDict
+from collections import OrderedDict
 from copy import deepcopy
 
 dodebug = 0
@@ -15,16 +15,11 @@ try:
 except ImportError:
     pass
 
-#myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
-#myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
-#myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
-#mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
-#mydb = 'lgc'
-
-myhost = 'localhost'
-myuser = 'steve'
-mypw = 'steve'
-mydb = 'lgc2'
+myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
+myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
+myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
+mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
+mydb = 'lgc'
 
 def get_sql(type, name, year, fields):
 
