@@ -1,43 +1,44 @@
 #!/usr/bin/env python
 
-import os, json
+import os, sys
 from bottle import Bottle, request
-try:
-  import pymysql
-  pymysql.install_as_MySQLdb()
-except ImportError:
-  pass
+#from bottle import hook, response, route, run, template
 
-myhost = os.environ['OPENSHIFT_MYSQL_DB_HOST']
-myport = os.environ['OPENSHIFT_MYSQL_DB_PORT']
-myuser = os.environ['OPENSHIFT_MYSQL_DB_USERNAME']
-mypw = os.environ['OPENSHIFT_MYSQL_DB_PASSWORD']
+import query
+
+#cmd_folder = os.path.dirname(os.path.abspath(__file__))
+#if cmd_folder not in sys.path:
+  #sys.path.insert(0, cmd_folder)
+
+@hook('after_request')
+def enable_cors():
+  response.headers['Access-Control-Allow-Origin'] = '*'
 
 application = Bottle()
 app = application
 
+#--------------- Define needed routes -------------------
+
 @app.route('/')
 def index():
-  return  '''
-              <p><a href="/parks">All Parks</a></p>
-              <p><a href="/parks/park">Query by Park ID</a></p>
-              <p><a href="/parks/name">Query by Park Name</a></p>
-              <p><a href="/parks/near">Query by Coordinates</a></p>
-              <p><a href="/parks/name/near">Query by Park Name & Coordinates</a></p>
-          '''
-
-@app.route('/api')
-@app.route('/api/<name>')
-def api(name='Stranger'):
-  conn = pymysql.connect(host=myhost, user=myuser, passwd=mypw, db="lgc", cursorclass=pymysql.cursors.DictCursor)
-  sql = 'SELECT count(*) FROM info'
-  cursor = conn.cursor()
-  cursor.execute(sql)
-  rows = cursor.fetchall()
-  return rows[0]
+  return  '<p>Data server for the <a href="http://data.msulocalgov.net">Montana Local Government Center Data Portal</a></p>'
 
 @app.route('/hello')
 @app.route('/hello/<name>')
 def greet(name='Stranger'):
-  return 'Hello there there there Mr. %s, how are you?' % name
+  return 'Hello there, %s?' % name
 
+@route('/data/<format>/<type>')
+@route('/data/<format>/<type>/<name>')
+@route('/data/<format>/<type>/<name>/year/<year>')
+@route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
+@route('/data/<format>/<type>/<name>/fields/<fields>')
+def get_the_data(format='', type='', name='', year='', fields=''):
+	data = query_lgc.get_data(format, type, name, year, fields)
+	return data
+
+#---------- Main method for local developement ----------
+
+if __name__ == '__main__':
+  bottle.debug(True)
+  #run(reloader=True)
