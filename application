@@ -41,4 +41,3 @@ def get_the_data(format='', type='', name='', year='', fields=''):
 
 if __name__ == '__main__':
   @app.debug(True)
-  #run(reloader=True)
