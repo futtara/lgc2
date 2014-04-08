@@ -2,7 +2,7 @@
 
 import os, sys
 from bottle import Bottle, request
-#from bottle import hook, response, route, run, template
+from bottle import hook, response, route, run, template
 
 import query
 
