@@ -2,7 +2,7 @@
 #   lists and tuples become arrays, dictionaries become objects with key-value pairs
 
 import os, sys, json
-import urllib
+from urllib import parse
 #from ordereddict import OrderedDict
 from collections import OrderedDict
 from copy import deepcopy
@@ -31,7 +31,7 @@ def get_sql(type, name, year, fields):
         sql += "type='City' "
 
     if len(name) > 0 and name.lower() != 'all':
-        name = urllib.parse.unquote_plus(name)
+        name = parse.unquote_plus(name)
         #name = name.replace('+', ' ');
         quoted_names = "','".join(name.split(','))
         sql += "AND name IN ('%s') " % (quoted_names)
@@ -41,7 +41,7 @@ def get_sql(type, name, year, fields):
         sql += "AND year IN ('%s') " % (quoted_years)
 
     if len(fields) > 0 and fields.lower() != 'all':
-        fields = urllib.parse.unquote_plus(fields)
+        fields = parse.unquote_plus(fields)
         #fields = fields.replace('+', ' ');
         quoted_fields = "','".join(fields.split(','))
         sql += "AND label IN ('%s') " % (quoted_fields)
