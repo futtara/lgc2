@@ -50,7 +50,7 @@ def get_sql(type, name, year, fields):
     sql += "AND year>1991 "
     sql += "ORDER BY year, name, label, display "
 
-    print sql
+    print(sql)
     return (sql)
 
 # Handle number formatting, especially rounding errors
@@ -86,7 +86,7 @@ def get_data(format, type, name, year, fields):
         the_name = rows[0]['name']
     except IndexError:
         # e = sys.exc_info()[0]
-        # print "Error: %s" % e
+        # print("Error: %s" % e)
 		conn.close()
 		result = { 'error': 'No data available for this request' }
 		return json.dumps(result)
@@ -97,7 +97,7 @@ def get_data(format, type, name, year, fields):
     last_row_display = 0
     for row in rows:
         if dodebug:
-            print row
+            print(row)
 
         # Ignore duplicate info (single type in query)
         if row['name'] == last_row_name:
@@ -144,7 +144,7 @@ def get_data(format, type, name, year, fields):
     # Append existing year data
     all_data[the_year] = deepcopy(year_array);
     #if dodebug:
-        #print all_data
+        #print(all_data)
 
     conn.close()
     json_data = json.dumps(all_data)
@@ -159,7 +159,7 @@ def main():
     #all_data = get_data('json', 'city', 'all', '2010', 'all')
     #all_data = get_data('json', 'city', 'BOZEMAN', '2010', 'all')
     all_data = get_data('json', 'county', 'all', '2009', 'Income')
-    print all_data
+    print(all_data)
 
 if __name__ == '__main__':
     main()
