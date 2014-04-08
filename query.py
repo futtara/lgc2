@@ -31,7 +31,7 @@ def get_sql(type, name, year, fields):
         sql += "type='City' "
 
     if len(name) > 0 and name.lower() != 'all':
-        name = urllib.unquote_plus(name)
+        name = urllib.parse.unquote_plus(name)
         #name = name.replace('+', ' ');
         quoted_names = "','".join(name.split(','))
         sql += "AND name IN ('%s') " % (quoted_names)
@@ -41,7 +41,7 @@ def get_sql(type, name, year, fields):
         sql += "AND year IN ('%s') " % (quoted_years)
 
     if len(fields) > 0 and fields.lower() != 'all':
-        fields = urllib.unquote_plus(fields)
+        fields = urllib.parse.unquote_plus(fields)
         #fields = fields.replace('+', ' ');
         quoted_fields = "','".join(fields.split(','))
         sql += "AND label IN ('%s') " % (quoted_fields)
