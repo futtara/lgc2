@@ -28,11 +28,11 @@ def index():
 def greet(name='Stranger'):
     return 'Hello there, %s?' % name
 
-@route('/data/<format>/<type>')
-@route('/data/<format>/<type>/<name>')
-@route('/data/<format>/<type>/<name>/year/<year>')
-@route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
-@route('/data/<format>/<type>/<name>/fields/<fields>')
+@app.route('/data/<format>/<type>')
+@app.route('/data/<format>/<type>/<name>')
+@app.route('/data/<format>/<type>/<name>/year/<year>')
+@app.route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
+@app.route('/data/<format>/<type>/<name>/fields/<fields>')
 def get_the_data(format='', type='', name='', year='', fields=''):
     data = query.get_data(format, type, name, year, fields)
     return data
