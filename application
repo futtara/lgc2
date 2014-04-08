@@ -8,11 +8,11 @@ import query
 
 #cmd_folder = os.path.dirname(os.path.abspath(__file__))
 #if cmd_folder not in sys.path:
-  #sys.path.insert(0, cmd_folder)
+    #sys.path.insert(0, cmd_folder)
 
 @hook('after_request')
 def enable_cors():
-  response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Origin'] = '*'
 
 application = Bottle()
 app = application
@@ -21,12 +21,12 @@ app = application
 
 @app.route('/')
 def index():
-  return  '<p>Data server for the <a href="http://data.msulocalgov.net">Montana Local Government Center Data Portal</a></p>'
+    return  '<p>Data server for the <a href="http://data.msulocalgov.net">Montana Local Government Center Data Portal</a></p>'
 
 @app.route('/hello')
 @app.route('/hello/<name>')
 def greet(name='Stranger'):
-  return 'Hello there, %s?' % name
+    return 'Hello there, %s?' % name
 
 @route('/data/<format>/<type>')
 @route('/data/<format>/<type>/<name>')
@@ -34,10 +34,17 @@ def greet(name='Stranger'):
 @route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
 @route('/data/<format>/<type>/<name>/fields/<fields>')
 def get_the_data(format='', type='', name='', year='', fields=''):
-	data = query_lgc.get_data(format, type, name, year, fields)
-	return data
+    data = query_lgc.get_data(format, type, name, year, fields)
+    return data
 
 #---------- Main method for local developement ----------
 
+def main():
+    #data = query_lgc.get_data('json', 'city', 'all', '2010', 'all')
+    #data = query_lgc.get_data('json', 'city', 'BOZEMAN', '2010', 'all')
+    data = query_lgc.get_data('json', 'county', 'all', '2009', 'Income')
+    return data
+
 if __name__ == '__main__':
-  @app.debug(True)
+    main()
+
