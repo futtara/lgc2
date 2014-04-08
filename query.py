@@ -88,9 +88,9 @@ def get_data(format, type, name, year, fields):
         e = sys.exc_info()[0]
         print("Error: %s" % e)
 
-    conn.close()
-    result = { 'error': 'No data available for this request' }
-    return json.dumps(result)
+        conn.close()
+        result = { 'error': 'No data available for this request' }
+        return json.dumps(result)
 
     last_row_name = 0
     last_row_year = 0
