@@ -1,20 +1,14 @@
 #!/usr/bin/env python
 
 import os, sys
-import bottle
 from bottle import Bottle, request
 from bottle import hook, response, route 
 
-bottle.debug(True)
-
 import query
-
-#cmd_folder = os.path.dirname(os.path.abspath(__file__))
-#if cmd_folder not in sys.path:
-    #sys.path.insert(0, cmd_folder)
 
 application = Bottle()
 app = application
+app.catchall = False
 
 @app.hook('after_request')
 def enable_cors():
