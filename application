@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os, sys
+import bottle
 from bottle import Bottle, request
 from bottle import hook, response, route 
 
