@@ -13,12 +13,12 @@ import query
 #if cmd_folder not in sys.path:
     #sys.path.insert(0, cmd_folder)
 
+application = Bottle()
+app = application
+
 @app.hook('after_request')
 def enable_cors():
     response.headers['Access-Control-Allow-Origin'] = '*'
-
-application = Bottle()
-app = application
 
 #--------------- Define needed routes -------------------
 
