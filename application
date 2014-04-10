@@ -8,7 +8,7 @@ import query
 
 application = Bottle()
 app = application
-app.catchall = False
+app.DEBUG = True
 
 @app.hook('after_request')
 def enable_cors():
