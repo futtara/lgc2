@@ -1,39 +1,48 @@
 #!/usr/bin/env python
-import imp
-import os
-import sys
 
-PYCART_DIR = ''.join(['python-', '.'.join(map(str, sys.version_info[:2]))])
+import os, sys
+from bottle import Bottle, request
+from bottle import hook, response, route 
 
+import query
 
-try:
-   zvirtenv = os.path.join(os.environ['OPENSHIFT_HOMEDIR'], PYCART_DIR,
-                           'virtenv', 'bin', 'activate_this.py')
-   exec(compile(open(zvirtenv).read(), zvirtenv, 'exec'),
-        dict(__file__ = zvirtenv) )
-except IOError:
-   pass
+application = Bottle()
+app = application
+app.DEBUG = True
 
+@app.hook('after_request')
+def enable_cors():
+    response.headers['Access-Control-Allow-Origin'] = '*'
 
-def run_simple_httpd_server(app, ip, port=8080):
-   from wsgiref.simple_server import make_server
-   make_server(ip, port, app).serve_forever()
+#--------------- Define needed routes -------------------
 
+@app.route('/')
+def index():
+    return  '<p>Data server for the <a href="http://data.msulocalgov.net">Montana Local Government Center Data Portal</a></p>'
 
-#
-# IMPORTANT: Put any additional includes below this line.  If placed above this
-# line, it's possible required libraries won't be in your searchable path
-# 
+@app.route('/hello')
+@app.route('/hello/<name>')
+def greet(name='Stranger'):
+    return 'Hello there, %s?' % name
 
+@app.route('/data/<format>/<type>')
+@app.route('/data/<format>/<type>/<name>')
+@app.route('/data/<format>/<type>/<name>/year/<year>')
+@app.route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
+@app.route('/data/<format>/<type>/<name>/fields/<fields>')
+def get_the_data(format='', type='', name='', year='', fields=''):
+    data = query.get_data(format, type, name, year, fields)
+    return data
 
-#
-#  main():
-#
+#---------- Main method for local developement ----------
+
+def main():
+    #data = query.get_data('json', 'city', 'all', '2010', 'all')
+    #data = query.get_data('json', 'city', 'BOZEMAN', '2010', 'all')
+    data = query.get_data('json', 'county', 'all', '2009', 'Income')
+    print(data)
+    return data
+
 if __name__ == '__main__':
-   ip   = os.environ['OPENSHIFT_PYTHON_IP']
-   port = 8080
-   zapp = imp.load_source('application', 'application')
-
-   print('Starting WSGIServer on %s:%d ... ' % (ip, port))
-   run_simple_httpd_server(zapp.application, ip, port)
+    main()
 
