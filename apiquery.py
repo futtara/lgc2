@@ -1,13 +1,10 @@
 # Output json from DB query
-#   lists and tuples become arrays, dictionaries become objects with key-value pairs
 
 import os, sys, json
 from urllib import parse
 #from ordereddict import OrderedDict
 from collections import OrderedDict
 from copy import deepcopy
-
-dodebug = 0
 
 try:
     import pymysql
@@ -74,6 +71,7 @@ def get_data(format, type, name, year, fields):
     sql = get_sql(type, name, year, fields)
     cursor.execute(sql)
      
+    # lists and tuples become arrays, dictionaries become objects
     all_data = OrderedDict()
     data_row = OrderedDict()
     year_array = OrderedDict()
@@ -97,9 +95,6 @@ def get_data(format, type, name, year, fields):
     last_row_label = 0
     last_row_display = 0
     for row in rows:
-        if dodebug:
-            print(row)
-
         # Ignore duplicate info (single type in query)
         if row['name'] == last_row_name:
             if row['year'] == last_row_year:
@@ -144,8 +139,6 @@ def get_data(format, type, name, year, fields):
     year_array[the_name] = data_row.copy()
     # Append existing year data
     all_data[the_year] = deepcopy(year_array);
-    #if dodebug:
-        #print(all_data)
 
     conn.close()
     json_data = json.dumps(all_data)
@@ -154,11 +147,7 @@ def get_data(format, type, name, year, fields):
 #---------- Main method for local developement ----------
 
 def main():
-    global dodebug
-    dodebug = 1
-    #all_data = get_data('json', 'county', 'all', '2010', 'General+Fund+Balance')
     #all_data = get_data('json', 'city', 'all', '2010', 'all')
-    #all_data = get_data('json', 'city', 'BOZEMAN', '2010', 'all')
     all_data = get_data('json', 'county', 'all', '2009', 'Income')
     print(all_data)
 

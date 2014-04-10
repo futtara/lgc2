@@ -4,11 +4,11 @@ import os, sys
 from bottle import Bottle, request
 from bottle import hook, response, route 
 
-import query
+import apiquery
 
 application = Bottle()
 app = application
-app.DEBUG = True
+#app.DEBUG = True
 
 @app.hook('after_request')
 def enable_cors():
@@ -19,11 +19,6 @@ def enable_cors():
 @app.route('/')
 def index():
     return  '<p>Data server for the <a href="http://data.msulocalgov.net">Montana Local Government Center Data Portal</a></p>'
-
-@app.route('/hello')
-@app.route('/hello/<name>')
-def greet(name='Stranger'):
-    return 'Hello there, %s?' % name
 
 @app.route('/data/<format>/<type>')
 @app.route('/data/<format>/<type>/<name>')
@@ -38,7 +33,6 @@ def get_the_data(format='', type='', name='', year='', fields=''):
 
 def main():
     #data = query.get_data('json', 'city', 'all', '2010', 'all')
-    #data = query.get_data('json', 'city', 'BOZEMAN', '2010', 'all')
     data = query.get_data('json', 'county', 'all', '2009', 'Income')
     print(data)
     return data
