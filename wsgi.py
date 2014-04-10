@@ -26,14 +26,14 @@ def index():
 @app.route('/data/<format>/<type>/<name>/year/<year>/fields/<fields>')
 @app.route('/data/<format>/<type>/<name>/fields/<fields>')
 def get_the_data(format='', type='', name='', year='', fields=''):
-    data = query.get_data(format, type, name, year, fields)
+    data = apiquery.get_data(format, type, name, year, fields)
     return data
 
 #---------- Main method for local developement ----------
 
 def main():
-    #data = query.get_data('json', 'city', 'all', '2010', 'all')
-    data = query.get_data('json', 'county', 'all', '2009', 'Income')
+    #data = apiquery.get_data('json', 'city', 'all', '2010', 'all')
+    data = apiquery.get_data('json', 'county', 'all', '2009', 'Income')
     print(data)
     return data
 
