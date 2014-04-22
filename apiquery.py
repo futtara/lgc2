@@ -45,7 +45,7 @@ def get_sql(type, name, year, fields):
 
     sql += "AND authority>0 AND value IS NOT NULL "
     sql += "AND year>1991 "
-    sql += "ORDER BY year, name, label, authority DESC LIMIT 1 "
+    sql += "ORDER BY year, name, label, authority DESC "
 
     print(sql)
     return (sql)
@@ -90,7 +90,16 @@ def get_data(format, type, name, year, fields):
         result = { 'error': 'No data available for this request' }
         return json.dumps(result)
 
+    last_row_name = 0
+    last_row_year = 0
+    last_row_label = 0
     for row in rows:
+        # Ignore duplicate info (single type in query)
+        if row['name'] == last_row_name:
+            if row['year'] == last_row_year:
+                if row['label'] == last_row_label:
+                    continue
+
         # Group by year
         if row['year'] == the_year:
             # Group by county or city name
@@ -117,6 +126,11 @@ def get_data(format, type, name, year, fields):
 
             the_name = row['name']
             the_year = row['year']
+
+        # Keep track of data seen
+        last_row_name = 0
+        last_row_year = 0
+        last_row_label = 0
 
     # Handle last data item
     # Append existing county or city data
