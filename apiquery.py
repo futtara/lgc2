@@ -20,7 +20,8 @@ mydb = 'lgc'
 
 def get_sql(type, name, year, fields):
 
-    sql = "SELECT * FROM info WHERE "
+    sql = "SELECT * FROM info2 WHERE "
+    #sql = "SELECT * FROM info WHERE "
 
     if type.lower() == 'county':
         sql += "type='County' "
