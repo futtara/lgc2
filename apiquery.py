@@ -45,7 +45,7 @@ def get_sql(type, name, year, fields):
         sql += "AND label IN ('%s') " % (quoted_fields)
 
     sql += "AND authority>0 AND value IS NOT NULL "
-    sql += "AND year>1991 "
+    # sql += "AND year>1991 "
     sql += "ORDER BY year, name, label, authority DESC "
 
     print(sql)
