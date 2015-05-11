@@ -37,6 +37,9 @@ def get_sql(type, name, year, fields):
     if len(year) > 0 and year.lower() == 'all':
         sql += "AND year>1990 "
 
+    if len(year) > 0 and year.lower() == 'all-from-1974':
+        sql += "AND year>=1974 "
+
     if len(year) > 0 and year.lower() != 'all':
         quoted_years = "','".join(year.split(','))
         sql += "AND year IN ('%s') " % (quoted_years)
