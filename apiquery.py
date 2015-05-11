@@ -34,6 +34,9 @@ def get_sql(type, name, year, fields):
         quoted_names = "','".join(name.split(','))
         sql += "AND name IN ('%s') " % (quoted_names)
 
+    if len(year) > 0 and year.lower() == 'all':
+        sql += "AND year>1990 "
+
     if len(year) > 0 and year.lower() != 'all':
         quoted_years = "','".join(year.split(','))
         sql += "AND year IN ('%s') " % (quoted_years)
@@ -45,7 +48,6 @@ def get_sql(type, name, year, fields):
         sql += "AND label IN ('%s') " % (quoted_fields)
 
     sql += "AND authority>0 AND value IS NOT NULL "
-    sql += "AND year>1990 "
     sql += "ORDER BY year, name, label, authority DESC "
 
     print(sql)
